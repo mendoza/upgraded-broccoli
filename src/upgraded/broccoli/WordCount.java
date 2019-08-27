@@ -50,6 +50,7 @@ public class WordCount {
     public static void main(String[] args) throws Exception {
         Configuration conf = new Configuration();
         Job job = Job.getInstance(conf, "word count");
+        job.getConfiguration().setStrings("mapreduce.reduce.shuffle.memory.limit.percent", "0.15");
         job.setJarByClass(WordCount.class);
         job.setMapperClass(TokenizerMapper.class);
         job.setCombinerClass(IntSumReducer.class);
