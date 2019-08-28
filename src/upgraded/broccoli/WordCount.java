@@ -1,3 +1,4 @@
+package upgraded.broccoli;
 
 
 import java.io.IOException;
@@ -20,11 +21,12 @@ public class WordCount {
 
         private final static IntWritable one = new IntWritable(1);
         private Text word = new Text();
-        
+
         @Override
         public void map(Object key, Text value, Context context
         ) throws IOException, InterruptedException {
-            StringTokenizer itr = new StringTokenizer(value.toString());
+            String linea = value.toString();
+            StringTokenizer itr = new StringTokenizer(linea, ",");
             while (itr.hasMoreTokens()) {
                 word.set(itr.nextToken());
                 context.write(word, one);
@@ -36,6 +38,7 @@ public class WordCount {
             extends Reducer<Text, IntWritable, Text, IntWritable> {
 
         private IntWritable result = new IntWritable();
+
         @Override
         public void reduce(Text key, Iterable<IntWritable> values,
                 Context context
