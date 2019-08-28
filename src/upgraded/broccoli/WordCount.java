@@ -23,7 +23,8 @@ public class WordCount {
         public void map(Object key, Text value, Context context
         ) throws IOException, InterruptedException {
             String linea = value.toString();
-            StringTokenizer itr = new StringTokenizer(linea, ",");
+            String[] splitLinea = linea.split(",");
+            StringTokenizer itr = new StringTokenizer(splitLinea[1]);
             while (itr.hasMoreTokens()) {
                 word.set(itr.nextToken());  
                 context.write(word, one);
