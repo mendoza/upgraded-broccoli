@@ -21,12 +21,10 @@ public class WordCount {
         private Text word = new Text();
 //ver que esta pasando :v
 
-        public String replaceAll(String review, String[] points) {
+        public String replaceAll(String review, String points) {
             System.out.println(review);
             String retval = review;
-            for (String point : points) {
-                review = review.replaceAll(point, "");
-            }
+            review = review.replaceAll(points, "");
             System.out.println(review);
             return retval;
         }
@@ -37,7 +35,7 @@ public class WordCount {
             String linea = value.toString();
             String[] splitLinea = linea.split(",");
             String[] Removes = {",", ".", "\"", "\'"};
-            String review = replaceAll(splitLinea[1], Removes);
+            String review = replaceAll(splitLinea[1], "[.,&#0-9!?\\\\\\'\\\"-]");
             StringTokenizer itr = new StringTokenizer(review);
             while (itr.hasMoreTokens()) {
                 word.set(itr.nextToken());
