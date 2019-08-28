@@ -20,7 +20,9 @@ public class WordCount {
         private final static IntWritable one = new IntWritable(1);
         private Text word = new Text();
 //ver que esta pasando :v
+
         public String replaceAll(String review, String[] points) {
+            System.out.println(review);
             String retval = review;
             for (String point : points) {
                 retval = retval.replaceAll(point, "");
