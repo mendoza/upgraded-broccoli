@@ -25,9 +25,9 @@ public class WordCount {
             System.out.println(review);
             String retval = review;
             for (String point : points) {
-                retval = retval.replaceAll(point, "");
+                review = review.replaceAll(point, "");
             }
-            System.out.println(retval);
+            System.out.println(review);
             return retval;
         }
 
