@@ -19,23 +19,13 @@ public class WordCount {
 
         private final static IntWritable one = new IntWritable(1);
         private Text word = new Text();
-//ver que esta pasando :v
-
-        public String replaceAll(String review, String points) {
-            System.out.println(review);
-            String retval = review;
-            review = review.replaceAll(points, "");
-            System.out.println(review);
-            return retval;
-        }
 
         @Override
         public void map(Object key, Text value, Context context
         ) throws IOException, InterruptedException {
             String linea = value.toString();
             String[] splitLinea = linea.split(",");
-            String[] Removes = {",", ".", "\"", "\'"};
-            String review = replaceAll(splitLinea[1], "[.,&#0-9!?\\\\\\'\\\"-]");
+            String review = splitLinea[1].replace("[.,&#0-9!?\\\\\\'\\\"-]", "");
             StringTokenizer itr = new StringTokenizer(review);
             while (itr.hasMoreTokens()) {
                 word.set(itr.nextToken());
