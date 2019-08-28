@@ -1,5 +1,3 @@
-package upgraded.broccoli;
-
 import java.io.IOException;
 import java.util.StringTokenizer;
 
@@ -27,7 +25,7 @@ public class WordCount {
             String linea = value.toString();
             StringTokenizer itr = new StringTokenizer(linea, ",");
             while (itr.hasMoreTokens()) {
-                word.set(itr.nextToken());
+                word.set(itr.nextToken());  
                 context.write(word, one);
             }
         }
