@@ -25,7 +25,7 @@ public class WordCount {
         ) throws IOException, InterruptedException {
             String linea = value.toString();
             String[] splitLinea = linea.split(",");
-            String review = splitLinea[1].replaceAll("[.,&()\\[\\]{}#0-9!?\\\\\\'\\\"-*\\~_;\\+\\-@\\^]", "");
+            String review = splitLinea[1].replaceAll("[.,&()\\[\\]{}#0-9!?\\\\\\'\\\"-*\\~_;\\+\\-@\\^|\\:\\/\\`]", "");
             StringTokenizer itr = new StringTokenizer(review);
             while (itr.hasMoreTokens()) {
                 word.set(itr.nextToken());
