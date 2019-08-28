@@ -1,3 +1,4 @@
+
 import java.io.IOException;
 import java.util.StringTokenizer;
 
@@ -19,14 +20,24 @@ public class WordCount {
         private final static IntWritable one = new IntWritable(1);
         private Text word = new Text();
 
+        public String replaceAll(String review, String[] points) {
+            String retval = review;
+            for (String point : points) {
+                retval = retval.replaceAll(point, "");
+            }
+            return retval;
+        }
+
         @Override
         public void map(Object key, Text value, Context context
         ) throws IOException, InterruptedException {
             String linea = value.toString();
             String[] splitLinea = linea.split(",");
-            StringTokenizer itr = new StringTokenizer(splitLinea[1]);
+            String[] Removes = {",", ".", "\"", "\'"};
+            String review = replaceAll(splitLinea[1], Removes);
+            StringTokenizer itr = new StringTokenizer(review);
             while (itr.hasMoreTokens()) {
-                word.set(itr.nextToken());  
+                word.set(itr.nextToken());
                 context.write(word, one);
             }
         }
