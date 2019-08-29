@@ -63,7 +63,7 @@ public class WordCount {
             StringTokenizer itr = new StringTokenizer(review.toLowerCase());
             while (itr.hasMoreTokens()) {
                 word.set(itr.nextToken());
-                if (contains(stopwords, word.toString())) {
+                if (!contains(stopwords, word.toString())) {
                     context.write(word, one);
                 }
             }
