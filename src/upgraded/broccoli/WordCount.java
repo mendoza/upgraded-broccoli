@@ -36,6 +36,7 @@ public class WordCount {
         @Override
         public void map(Object key, Text value, Context context
         ) throws IOException, InterruptedException {
+            boolean oneWord = false;
             String linea = value.toString();
             String[] stopwords = new String[]{"a", "about", "above", "above", "across", "after", "afterwards", "again", "against", "all", "almost", "alone", "along",
                 "already", "also", "although", "always", "am", "among", "amongst", "amoungst", "amount", "an", "and", "another", "any", "anyhow", "anyone", "anything",
@@ -58,13 +59,28 @@ public class WordCount {
                 "wherein", "whereupon", "wherever", "whether", "which", "while", "whither", "who", "whoever", "whole", "whom", "whose", "why", "will", "with", "within",
                 "without", "would", "yet", "you", "your", "yours", "yourself", "yourselves", "the"};
             String[] splitLinea = linea.split(",");
+            String realData = splitLinea[1];
             String regex = "[.,&()\\[\\]{}#0-9!?\\\\\\'\\\"-*\\~_;\\+\\-@\\^|\\:\\/\\`=<>]";
-            String review = splitLinea[1].replaceAll(regex, " ");
-            StringTokenizer itr = new StringTokenizer(review.toLowerCase());
-            while (itr.hasMoreTokens()) {
-                word.set(itr.nextToken());
-                if (!contains(stopwords, word.toString())) {
-                    context.write(word, one);
+            String review = realData.replaceAll(regex, " ").toLowerCase();
+            if (oneWord) {
+                StringTokenizer itr = new StringTokenizer(review);
+                while (itr.hasMoreTokens()) {
+                    word.set(itr.nextToken());
+                    if (!contains(stopwords, word.toString())) {
+                        context.write(word, one);
+                    }
+                }
+            } else {
+                String[] words = review.split(" ");
+                for (int i = 0; i < words.length; i++) {
+                    String palabras = words[i];
+                    if (i + 1 < words.length) {
+                        palabras += words[i + 1];
+                    }
+                    word.set(palabras);
+                    if (!contains(stopwords, word.toString())) {
+                        context.write(word, one);
+                    }
                 }
             }
         }
