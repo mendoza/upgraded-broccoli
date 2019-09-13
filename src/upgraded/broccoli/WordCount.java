@@ -21,20 +21,6 @@ public class WordCount {
         private final static IntWritable one = new IntWritable(1);
         private Text word = new Text();
 
-        public static boolean contains(final String[] array, final String v) {
-
-            boolean result = true;
-
-            for (String i : array) {
-                if (i.equals(v)) {
-                    result = true;
-                    break;
-                }
-            }
-
-            return result;
-        }
-
         @Override
         public void map(Object key, Text value, Context context
         ) throws IOException, InterruptedException {
@@ -60,29 +46,32 @@ public class WordCount {
                 "upon", "us", "very", "via", "was", "we", "well", "were", "what", "whatever", "when", "whence", "whenever", "where", "whereafter", "whereas", "whereby",
                 "wherein", "whereupon", "wherever", "whether", "which", "while", "whither", "who", "whoever", "whole", "whom", "whose", "why", "will", "with", "within",
                 "without", "would", "yet", "you", "your", "yours", "yourself", "yourselves", "the"};
+            List<String> list = Arrays.asList(stopwords);
             String[] splitLinea = linea.split(",");
             String regex = "[.,&()\\[\\]{}#0-9!?\\\\\\'\\\"-*\\~_;\\+\\-@\\^|\\:\\/\\`=<>]";
             String review = splitLinea[1].replaceAll(regex, " ");
-            StringTokenizer itr = new StringTokenizer(review.toLowerCase());
-            while (itr.hasMoreTokens()) {
-                word.set(itr.nextToken());
-                List<String> list = Arrays.asList(stopwords);
-                if (!list.contains(word.toString())) {
-                    System.out.println("entro");
-                    context.write(word, one);
+            if (oneWord == true) {
+                StringTokenizer itr = new StringTokenizer(review.toLowerCase());
+                while (itr.hasMoreTokens()) {
+                    word.set(itr.nextToken());
+                    if (!list.contains(word.toString())) {
+                        System.out.println("entro");
+                        context.write(word, one);
+                    }
+                }
+            } else {
+                String[] words = review.toLowerCase().split(" ");
+                for (int i = 0; i < words.length; i++) {
+                    String palabras = words[i];
+                    if (i + 1 < words.length) {
+                        palabras += " " + words[i + 1];
+                    }
+                    word.set(palabras);
+                    if (!list.contains(word.toString())) {
+                        context.write(word, one);
+                    }
                 }
             }
-//                String[] words = review.toLowerCase().split(" ");
-//                for (int i = 0; i < words.length; i++) {
-//                    String palabras = words[i];
-//                    if (i + 1 < words.length) {
-//                        palabras += " " + words[i + 1];
-//                    }
-//                    word.set(palabras);
-//                    if (!contains(stopwords, word.toString())) {
-//                        context.write(word, one);
-//                    }
-//                }
         }
     }
 
