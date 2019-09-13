@@ -21,7 +21,7 @@ public class WordCount {
 
         public static boolean contains(final String[] array, final String v) {
 
-            boolean result = false;
+            boolean result = true;
 
             for (String i : array) {
                 if (i.equals(v)) {
