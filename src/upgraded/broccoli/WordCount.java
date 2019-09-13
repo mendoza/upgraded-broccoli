@@ -24,7 +24,7 @@ public class WordCount {
         @Override
         public void map(Object key, Text value, Context context
         ) throws IOException, InterruptedException {
-            boolean oneWord = true;
+            boolean oneWord = false;
             String linea = value.toString();
             String[] stopwords = new String[]{"a", "about", "above", "above", "across", "after", "afterwards", "again", "against", "all", "almost", "alone", "along",
                 "already", "also", "although", "always", "am", "among", "amongst", "amoungst", "amount", "an", "and", "another", "any", "anyhow", "anyone", "anything",
