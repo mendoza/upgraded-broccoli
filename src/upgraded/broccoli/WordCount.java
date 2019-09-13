@@ -59,9 +59,8 @@ public class WordCount {
                 "wherein", "whereupon", "wherever", "whether", "which", "while", "whither", "who", "whoever", "whole", "whom", "whose", "why", "will", "with", "within",
                 "without", "would", "yet", "you", "your", "yours", "yourself", "yourselves", "the"};
             String[] splitLinea = linea.split(",");
-            String realData = splitLinea[1];
             String regex = "[.,&()\\[\\]{}#0-9!?\\\\\\'\\\"-*\\~_;\\+\\-@\\^|\\:\\/\\`=<>]";
-            String review = realData.replaceAll(regex, " ");
+            String review = splitLinea[1].replaceAll(regex, " ");
             StringTokenizer itr = new StringTokenizer(review.toLowerCase());
             while (itr.hasMoreTokens()) {
                 word.set(itr.nextToken());
