@@ -55,7 +55,6 @@ public class WordCount {
                 while (itr.hasMoreTokens()) {
                     word.set(itr.nextToken());
                     if (!list.contains(word.toString())) {
-                        System.out.println("entro");
                         context.write(word, one);
                     }
                 }
