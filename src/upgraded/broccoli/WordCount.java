@@ -61,19 +61,17 @@ public class WordCount {
             String[] splitLinea = linea.split(",");
             String realData = splitLinea[1];
             String regex = "[.,&()\\[\\]{}#0-9!?\\\\\\'\\\"-*\\~_;\\+\\-@\\^|\\:\\/\\`=<>]";
-            String review = realData.replaceAll(regex, " ").toLowerCase();
+            String review = realData.replaceAll(regex, " ");
             if (oneWord == true) {
-                System.out.println("entro");
-                StringTokenizer itr = new StringTokenizer(review);
+                StringTokenizer itr = new StringTokenizer(review.toLowerCase());
                 while (itr.hasMoreTokens()) {
                     word.set(itr.nextToken());
                     if (!contains(stopwords, word.toString())) {
-                        System.out.println(word.toString() + " " + !contains(stopwords, word.toString()));
                         context.write(word, one);
                     }
                 }
             } else {
-                String[] words = review.split(" ");
+                String[] words = review.toLowerCase().split(" ");
                 for (int i = 0; i < words.length; i++) {
                     String palabras = words[i];
                     if (i + 1 < words.length) {
