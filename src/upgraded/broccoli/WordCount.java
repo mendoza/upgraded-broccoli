@@ -10,6 +10,8 @@ import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+import java.util.Arrays;
+import java.util.List;
 
 public class WordCount {
 
@@ -64,7 +66,8 @@ public class WordCount {
             StringTokenizer itr = new StringTokenizer(review.toLowerCase());
             while (itr.hasMoreTokens()) {
                 word.set(itr.nextToken());
-                if (!contains(stopwords, word.toString())) {
+                List<String> list = Arrays.asList(stopwords);
+                if (!list.contains(word.toString())) {
                     System.out.println("entro");
                     context.write(word, one);
                 }
