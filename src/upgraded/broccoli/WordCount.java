@@ -62,28 +62,24 @@ public class WordCount {
             String realData = splitLinea[1];
             String regex = "[.,&()\\[\\]{}#0-9!?\\\\\\'\\\"-*\\~_;\\+\\-@\\^|\\:\\/\\`=<>]";
             String review = realData.replaceAll(regex, " ");
-            System.out.println(review);            
-            if (oneWord == true) {
-                StringTokenizer itr = new StringTokenizer(review.toLowerCase());
-                while (itr.hasMoreTokens()) {
-                    word.set(itr.nextToken());
-                    if (!contains(stopwords, word.toString())) {
-                        context.write(word, one);
-                    }
-                }
-            } else {
-                String[] words = review.toLowerCase().split(" ");
-                for (int i = 0; i < words.length; i++) {
-                    String palabras = words[i];
-                    if (i + 1 < words.length) {
-                        palabras += " " + words[i + 1];
-                    }
-                    word.set(palabras);
-                    if (!contains(stopwords, word.toString())) {
-                        context.write(word, one);
-                    }
+            StringTokenizer itr = new StringTokenizer(review.toLowerCase());
+            while (itr.hasMoreTokens()) {
+                word.set(itr.nextToken());
+                if (!contains(stopwords, word.toString())) {
+                    context.write(word, one);
                 }
             }
+//                String[] words = review.toLowerCase().split(" ");
+//                for (int i = 0; i < words.length; i++) {
+//                    String palabras = words[i];
+//                    if (i + 1 < words.length) {
+//                        palabras += " " + words[i + 1];
+//                    }
+//                    word.set(palabras);
+//                    if (!contains(stopwords, word.toString())) {
+//                        context.write(word, one);
+//                    }
+//                }
         }
     }
 
