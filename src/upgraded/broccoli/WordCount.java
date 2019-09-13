@@ -62,6 +62,7 @@ public class WordCount {
             String realData = splitLinea[1];
             String regex = "[.,&()\\[\\]{}#0-9!?\\\\\\'\\\"-*\\~_;\\+\\-@\\^|\\:\\/\\`=<>]";
             String review = realData.replaceAll(regex, " ");
+            System.out.println(review);            
             if (oneWord == true) {
                 StringTokenizer itr = new StringTokenizer(review.toLowerCase());
                 while (itr.hasMoreTokens()) {
