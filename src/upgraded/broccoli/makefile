@@ -6,6 +6,5 @@ test:
         /usr/local/hadoop/bin/hadoop jar wc.jar WordCount ~/data/kindle_reviews_testing.csv ~/output
 full:
         /usr/local/hadoop/bin/hadoop jar wc.jar WordCount ~/data/kindle_reviews.csv ~/output
-
 cleanOutput:
         rm -rf ~/output/
