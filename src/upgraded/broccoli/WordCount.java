@@ -75,7 +75,7 @@ public class WordCount {
                 for (int i = 0; i < words.length; i++) {
                     String palabras = words[i];
                     if (i + 1 < words.length) {
-                        palabras += words[i + 1];
+                        palabras += " " + words[i + 1];
                     }
                     word.set(palabras);
                     if (!contains(stopwords, word.toString())) {
