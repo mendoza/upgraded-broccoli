@@ -66,7 +66,8 @@ public class WordCount {
                         palabras += " " + words[i + 1];
                     }
                     word.set(palabras);
-                    if (!list.contains(word.toString())) {
+                    String[] TwoWords = palabras.split(" ");
+                    if (!list.contains(TwoWords[0]) && ! list.contains(TwoWords[1])) {
                         context.write(word, one);
                     }
                 }
