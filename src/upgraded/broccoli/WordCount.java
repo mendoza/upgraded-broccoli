@@ -16,6 +16,7 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import java.util.Arrays;
 import java.util.List;
+import jdk.nashorn.internal.parser.JSONParser;
 
 public class WordCount {
 
@@ -59,19 +60,18 @@ public class WordCount {
                 StringTokenizer itr = new StringTokenizer(review.toLowerCase());
                 while (itr.hasMoreTokens()) {
                     word.set(itr.nextToken());
-                    if (!list.contains(word.toString())) {
-                        URL url = new URL("http://127.0.0.1:3001/Exist/" + word.toString());
-                        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                        con.setRequestMethod("GET");
-                        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                        String inputLine;
-                        StringBuffer content = new StringBuffer();
-                        while ((inputLine = in.readLine()) != null) {
-                            content.append(inputLine);
-                        }
-                        in.close();
-                        con.disconnect();
-                        System.out.println(content);
+                    URL url = new URL("http://127.0.0.1:3001/Exist/" + word.toString());
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    con.setRequestMethod("GET");
+                    BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                    String inputLine;
+                    StringBuffer content = new StringBuffer();
+                    while ((inputLine = in.readLine()) != null) {
+                        content.append(inputLine);
+                    }
+                    in.close();
+                    con.disconnect();
+                    if (!list.contains(word.toString()) && content.equals("TRUE")) {
                         context.write(word, one);
                     }
                 }
