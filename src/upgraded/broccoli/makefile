@@ -17,10 +17,10 @@ full:
 	/usr/local/hadoop/bin/hadoop jar wc.jar WordCount ~/data/kindle_reviews.csv ~/output
 
 oneWord:
-	/usr/local/hadoop/bin/hadoop jar wc.jar WordCount ~/data/kindle_reviews.csv ~/oneWord
+	/usr/local/hadoop/bin/hadoop jar OW.jar WordCount ~/data/kindle_reviews.csv ~/oneWord
 
 twoWords:
-	/usr/local/hadoop/bin/hadoop jar wc.jar WordCount ~/data/kindle_reviews.csv ~/twoWords
+	/usr/local/hadoop/bin/hadoop jar TW.jar WordCount ~/data/kindle_reviews.csv ~/twoWords
 
 cleanOutput:
 	rm -rf ~/output

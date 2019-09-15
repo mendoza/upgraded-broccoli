@@ -1,3 +1,4 @@
+
 import java.io.IOException;
 import java.util.StringTokenizer;
 import org.apache.hadoop.conf.Configuration;
@@ -50,28 +51,11 @@ public class oneWord {
             String regex = "[.,&()\\[\\]{}#0-9!?\\\\\\'\\\"-*\\~_;\\+\\-@\\^|\\:\\/\\`=<>]";
             String review = splitLinea[1].replaceAll(regex, " ");
             review = review.replaceAll("\\s+", " ");
-            if (oneWord == true) {
-                StringTokenizer itr = new StringTokenizer(review.toLowerCase());
-                while (itr.hasMoreTokens()) {
-                    word.set(itr.nextToken());
-                    if (!list.contains(word.toString())) {
-                        context.write(word, one);
-                    }
-                }
-            } else {
-                String[] words = review.toLowerCase().split(" ");
-                for (int i = 0; i < words.length; i++) {
-                    String palabras = words[i];
-                    if (i + 1 < words.length) {
-                        palabras += " " + words[i + 1];
-                    }
-                    word.set(palabras);
-                    String[] TwoWords = palabras.split(" ");
-                    if (TwoWords.length == 2) {
-                        if (!list.contains(TwoWords[0]) && !list.contains(TwoWords[1])) {
-                            context.write(word, one);
-                        }
-                    }
+            StringTokenizer itr = new StringTokenizer(review.toLowerCase());
+            while (itr.hasMoreTokens()) {
+                word.set(itr.nextToken());
+                if (!list.contains(word.toString())) {
+                    context.write(word, one);
                 }
             }
         }
