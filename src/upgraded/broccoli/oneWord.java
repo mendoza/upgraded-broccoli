@@ -12,7 +12,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import java.util.Arrays;
 import java.util.List;
 
-public class WordCount {
+public class oneWord {
 
     public static class TokenizerMapper
             extends Mapper<Object, Text, Text, IntWritable> {
@@ -99,7 +99,7 @@ public class WordCount {
         Configuration conf = new Configuration();
         Job job = Job.getInstance(conf, "word count");
         job.getConfiguration().setStrings("mapreduce.reduce.shuffle.memory.limit.percent", "0.15");
-        job.setJarByClass(WordCount.class);
+        job.setJarByClass(oneWord.class);
         job.setMapperClass(TokenizerMapper.class);
         job.setCombinerClass(IntSumReducer.class);
         job.setReducerClass(IntSumReducer.class);
