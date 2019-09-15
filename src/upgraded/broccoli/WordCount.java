@@ -1,9 +1,4 @@
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.StringTokenizer;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -16,7 +11,6 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import java.util.Arrays;
 import java.util.List;
-import jdk.nashorn.internal.parser.JSONParser;
 
 public class WordCount {
 
@@ -60,18 +54,7 @@ public class WordCount {
                 StringTokenizer itr = new StringTokenizer(review.toLowerCase());
                 while (itr.hasMoreTokens()) {
                     word.set(itr.nextToken());
-                    URL url = new URL("http://127.0.0.1:3001/Exist/" + word.toString());
-                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                    con.setRequestMethod("GET");
-                    BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                    String inputLine;
-                    StringBuffer content = new StringBuffer();
-                    while ((inputLine = in.readLine()) != null) {
-                        content.append(inputLine);
-                    }
-                    in.close();
-                    con.disconnect();
-                    if (!list.contains(word.toString()) && content.equals("TRUE")) {
+                    if (!list.contains(word.toString())) {
                         context.write(word, one);
                     }
                 }
