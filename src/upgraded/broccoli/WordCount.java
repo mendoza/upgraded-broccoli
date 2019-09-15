@@ -60,7 +60,7 @@ public class WordCount {
                 while (itr.hasMoreTokens()) {
                     word.set(itr.nextToken());
                     if (!list.contains(word.toString())) {
-                        URL url = new URL("127.0.0.1:3001/Exist/" + word.toString());
+                        URL url = new URL("http://127.0.0.1:3001/Exist/" + word.toString());
                         HttpURLConnection con = (HttpURLConnection) url.openConnection();
                         con.setRequestMethod("GET");
                         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
