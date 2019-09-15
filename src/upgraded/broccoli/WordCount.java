@@ -65,14 +65,9 @@ public class WordCount {
                     if (i + 1 < words.length) {
                         palabras += " " + words[i + 1];
                     }
-                    System.out.println("aqui esta palabras: " + palabras);
-
                     word.set(palabras);
                     String[] TwoWords = palabras.split(" ");
-                    for (String TwoWord : TwoWords) {
-                        System.out.println("esto es partes de two words: " + TwoWord);
-                    }
-                    if (TwoWords.length > 1 && TwoWords.length < 3) {
+                    if (TwoWords.length == 2) {
                         if (!list.contains(TwoWords[0]) && !list.contains(TwoWords[1])) {
                             context.write(word, one);
                         }
