@@ -1,4 +1,3 @@
-
 import java.io.IOException;
 import java.util.StringTokenizer;
 import org.apache.hadoop.conf.Configuration;
@@ -8,6 +7,7 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
+import org.apache.hadoop.mapreduce.Reducer.Context;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import java.util.Arrays;
@@ -22,8 +22,9 @@ public class twoWords {
         private Text word = new Text();
 
         @Override
-        public void map(Object key, Text value, Reducer.Context context
+        public void map(Object key, Text value, Context context
         ) throws IOException, InterruptedException {
+            boolean oneWord = true;
             String linea = value.toString();
             String[] stopwords = new String[]{"a", "about", "above", "above", "across", "after", "afterwards", "again", "against", "all", "almost", "alone", "along",
                 "already", "also", "although", "always", "am", "among", "amongst", "amoungst", "amount", "an", "and", "another", "any", "anyhow", "anyone", "anything",
@@ -51,53 +52,45 @@ public class twoWords {
             String review = splitLinea[1].replaceAll(regex, " ");
             review = review.replaceAll("\\s+", " ");
             StringTokenizer itr = new StringTokenizer(review.toLowerCase());
-            String[] words = review.toLowerCase().split(" ");
-            for (int i = 0; i < words.length; i++) {
-                String palabras = words[i];
-                if (i + 1 < words.length) {
-                    palabras += " " + words[i + 1];
-                }
-                word.set(palabras);
-                String[] TwoWords = palabras.split(" ");
-                if (TwoWords.length == 2) {
-                    if (!list.contains(TwoWords[0]) && !list.contains(TwoWords[1])) {
-                        context.write(word, one);
-                    }
+            while (itr.hasMoreTokens()) {
+                word.set(itr.nextToken());
+                if (!list.contains(word.toString())) {
+                    context.write(word, one);
                 }
             }
         }
+    }
 
-        public static class IntSumReducer
-                extends Reducer<Text, IntWritable, Text, IntWritable> {
+    public static class IntSumReducer
+            extends Reducer<Text, IntWritable, Text, IntWritable> {
 
-            private IntWritable result = new IntWritable();
+        private IntWritable result = new IntWritable();
 
-            @Override
-            public void reduce(Text key, Iterable<IntWritable> values,
-                    Reducer.Context context
-            ) throws IOException, InterruptedException {
-                int sum = 0;
-                for (IntWritable val : values) {
-                    sum += val.get();
-                }
-                result.set(sum);
-                context.write(key, result);
+        @Override
+        public void reduce(Text key, Iterable<IntWritable> values,
+                Context context
+        ) throws IOException, InterruptedException {
+            int sum = 0;
+            for (IntWritable val : values) {
+                sum += val.get();
             }
+            result.set(sum);
+            context.write(key, result);
         }
+    }
 
-        public static void main(String[] args) throws Exception {
-            Configuration conf = new Configuration();
-            Job job = Job.getInstance(conf, "word count");
-            job.getConfiguration().setStrings("mapreduce.reduce.shuffle.memory.limit.percent", "0.15");
-            job.setJarByClass(twoWords.class);
-            job.setMapperClass(TokenizerMapper.class);
-            job.setCombinerClass(IntSumReducer.class);
-            job.setReducerClass(IntSumReducer.class);
-            job.setOutputKeyClass(Text.class);
-            job.setOutputValueClass(IntWritable.class);
-            FileInputFormat.addInputPath(job, new Path(args[0]));
-            FileOutputFormat.setOutputPath(job, new Path(args[1]));
-            System.exit(job.waitForCompletion(true) ? 0 : 1);
-        }
+    public static void main(String[] args) throws Exception {
+        Configuration conf = new Configuration();
+        Job job = Job.getInstance(conf, "word count");
+        job.getConfiguration().setStrings("mapreduce.reduce.shuffle.memory.limit.percent", "0.15");
+        job.setJarByClass(oneWord.class);
+        job.setMapperClass(TokenizerMapper.class);
+        job.setCombinerClass(IntSumReducer.class);
+        job.setReducerClass(IntSumReducer.class);
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(IntWritable.class);
+        FileInputFormat.addInputPath(job, new Path(args[0]));
+        FileOutputFormat.setOutputPath(job, new Path(args[1]));
+        System.exit(job.waitForCompletion(true) ? 0 : 1);
     }
 }
