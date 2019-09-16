@@ -1,3 +1,4 @@
+
 import java.io.IOException;
 import java.util.StringTokenizer;
 import org.apache.hadoop.conf.Configuration;
@@ -99,3 +100,4 @@ public class twoWords {
             System.exit(job.waitForCompletion(true) ? 0 : 1);
         }
     }
+}
