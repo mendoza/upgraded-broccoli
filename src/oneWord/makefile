@@ -1,32 +1,11 @@
-OW:
-	javac -cp .:$HADOOP_CLASSPATH:../../../jars/hadoop-common-3.2.0.jar:../../../jars/hadoop-hdfs-3.2.0.jar:../../../jars/hadoop-mapreduce-client-core-3.2.0.jar oneWord.java
+main:
+	javac -cp .:$HADOOP_CLASSPATH:../../jars/hadoop-common-3.2.0.jar:../../jars/hadoop-hdfs-3.2.0.jar:../../jars/hadoop-mapreduce-client-core-3.2.0.jar oneWord.java
 
-OWjar:
+jar:
 	jar cf OW.jar oneWord*.class
-
-TW:
-	javac -cp .:$HADOOP_CLASSPATH:../../../jars/hadoop-common-3.2.0.jar:../../../jars/hadoop-hdfs-3.2.0.jar:../../../jars/hadoop-mapreduce-client-core-3.2.0.jar twoWords.java
-
-TWjar:
-	jar cf TW.jar twoWords*.class
-
-test:
-	/usr/local/hadoop/bin/hadoop jar wc.jar WordCount ~/data/kindle_reviews_testing.csv ~/output
-
-full:
-	/usr/local/hadoop/bin/hadoop jar wc.jar WordCount ~/data/kindle_reviews.csv ~/output
 
 oneWord:
 	/usr/local/hadoop/bin/hadoop jar OW.jar oneWord ~/data/kindle_reviews.csv ~/oneWord
 
-twoWords:
-	/usr/local/hadoop/bin/hadoop jar TW.jar twoWords ~/data/kindle_reviews.csv ~/twoWords
-
 cleanOutput:
-	rm -rf ~/output
-
-cleanOneWord:
 	rm -rf ~/oneWord
-
-cleanTwoWords:
-	rm -rf ~/twoWords
