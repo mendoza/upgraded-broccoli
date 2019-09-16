@@ -1,5 +1,5 @@
 main:
-	javac -cp .:$HADOOP_CLASSPATH:../../../jars/hadoop-common-3.2.0.jar:../../../jars/hadoop-hdfs-3.2.0.jar:../../../jars/hadoop-mapreduce-client-core-3.2.0.jar twoWords.java
+	javac -cp .:$HADOOP_CLASSPATH:../../jars/hadoop-common-3.2.0.jar:../../jars/hadoop-hdfs-3.2.0.jar:../../jars/hadoop-mapreduce-client-core-3.2.0.jar twoWords.java
 
 jar:
 	jar cf TW.jar twoWords*.class
